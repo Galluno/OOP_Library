@@ -4,7 +4,7 @@ import java.util.Observable;
 import java.util.Observer;
 import java.util.Set;
 
-public class Libreria implements Observable {
+public class Libreria extends Observable {
 
     private Set<Libro> Libri = new HashSet<>();
     public Libreria() {
