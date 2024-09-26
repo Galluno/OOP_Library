@@ -1,5 +1,6 @@
-
-import lombok.*;
+import lombok.Getter;
+import lombok.NonNull;
+import lombok.Setter;
 
 @Getter
 public class Libro {
@@ -8,8 +9,8 @@ public class Libro {
     String ISBN;
     String Autore;
     TipoLibro tipoLibro;
-    int disponibilità;
-
+    @Setter
+    private int disponibilità;
 
     public Libro(@NonNull String Titolo, @NonNull String ISBN, @NonNull String Autore) {
         if(Titolo.isEmpty() || ISBN.isEmpty() || Autore.isEmpty()) {
@@ -33,9 +34,24 @@ public class Libro {
     }
 
 
+    /*
+    Mission: increase the Libro libro object by one
+     */
+    public void addLibro(Libro libro) {
+        libro.disponibilità++;
+    }
+
+    public void uscitaLibro(Libro libro) {
+        libro.disponibilità--;
+    }
+
+
     private boolean checkTipo(TipoLibro tipo) {
         for( TipoLibro t : TipoLibro.values()) {
-            if(t.equals(tipo)) { return true; } else { return false; }
+            if (t.equals(tipo)) {
+                return true;
+            }
         }
+        return false;
     }
 }
