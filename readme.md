@@ -1,6 +1,6 @@
-# Esame di Programmazione Orientata agli Oggetti - Parte 2
+# Esempio di Esame di Programmazione Orientata agli Oggetti - Parte 2
 
-15 giugno 2024 - Sistema di Gestione Biblioteca
+25 settembre 2024 - Sistema di Gestione Biblioteca
 
 La biblioteca comunale vuole implementare un sistema software per gestire il prestito e la restituzione dei libri. Il
 sistema deve consentire ai bibliotecari di gestire l'inventario dei libri, le prenotazioni degli utenti e il
@@ -45,3 +45,6 @@ quali:
 
 Si prega di scrivere in modo chiaro e comprensibile. Non verranno considerate spiegazioni complesse, schemi o diagrammi.
 Ciò che risulta incomprensibile sarà interpretato come errato.
+
+
+Generato da Claude AI su base di tracce d'esame del corso OOP di UniUd
