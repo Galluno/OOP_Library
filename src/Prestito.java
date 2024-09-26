@@ -1,10 +1,12 @@
 import java.time.LocalDate;
+import java.util.Map;
 import java.util.Observer;
 
 public class Prestito implements Observable {
     public LocalDate data;
     public long inizioPrestito;
     private long finePrestito;
+    private Map<Libro, Utente> prestiti = new Map<Libro, Utente>(); //TODO: implementare la coppia Libro-Utente per il prestito
         /*
         PRESTITO: rappresenta tutti i prestiti fatti da utenti della biblioteca.
         @param libro il libro in prestito

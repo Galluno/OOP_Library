@@ -26,7 +26,7 @@ public class Bibliotecario {
         if (!utente.isSospeso()) {
             if (!checkDisponibilità(libro)) {
                 libro.uscitaLibro(libro);
-                new Prestito(libro, utente);
+                new Prestito().addPrestito(utente, libro);
             } else throw new IllegalLibroAmount("Libro non disponibile");
         } else throw new IllegalUtenteException("L'utente è sospeso");
     }
