@@ -1,6 +1,7 @@
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
+import java.time.LocalDate;
 
 public class Utente {
 
@@ -8,6 +9,7 @@ public class Utente {
     private String CodFis;
     private Date data;
     private boolean utenteSospeso;
+    private LocalDate dataSospensione;
 
     public Set<Prestito> libriInPrestito;
 
@@ -21,11 +23,17 @@ public class Utente {
     }
 
     public void sospendiUtente() {
-        //TODO
+        this.utenteSospeso = true;
+        this.dataSospensione = LocalDate.now().plusMonths(1);
     }
 
 
     public boolean isSospeso() {
+        // Check if suspension period has expired
+        if (utenteSospeso && dataSospensione != null && LocalDate.now().isAfter(dataSospensione)) {
+            utenteSospeso = false;
+            dataSospensione = null;
+        }
         return utenteSospeso;
     }
 
@@ -44,5 +52,9 @@ public class Utente {
 
     public Set<Prestito> getLibriInPrestito() {
         return libriInPrestito;
+    }
+
+    public LocalDate getDataSospensione() {
+        return dataSospensione;
     }
 }

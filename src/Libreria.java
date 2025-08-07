@@ -1,15 +1,25 @@
 import javax.swing.*;
 import java.util.HashSet;
-import java.util.Observable;
 import java.util.Observer;
 import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
-public class Libreria extends Observable {
+public class Libreria implements Observable {
 
     private Set<Libro> Libri = new HashSet<>();
+    private TipoLibro tipoLibreriaConsentito;
+    private List<Observer> observers = new ArrayList<>();
     public Libreria() {
         this.Libri = new HashSet<>();
+        this.observers = new ArrayList<>();
+        this.tipoLibreriaConsentito = null; // Accept all types by default
+    }
 
+    public Libreria(TipoLibro tipoConsentito) {
+        this.Libri = new HashSet<>();
+        this.observers = new ArrayList<>();
+        this.tipoLibreriaConsentito = tipoConsentito;
     }
 
 
@@ -18,10 +28,37 @@ public class Libreria extends Observable {
             throw new IllegalArgumentException("La libreria non può essere vuota");
         }
         this.Libri = Libri;
+        this.tipoLibreriaConsentito = tipoLibro;
+        this.observers = new ArrayList<>();
+        
+        // Verify all books are of the correct type
+        for (Libro libro : Libri) {
+            if (!verificaTipoLibro(libro)) {
+                throw new IllegalArgumentException("Libro '" + libro.getTitolo() + "' non è del tipo consentito: " + tipoLibro);
+            }
+        }
     }
 
     public void addLibro(Libro libro) {
-        this.Libri.add(libro);
+        if (verificaTipoLibro(libro)) {
+            this.Libri.add(libro);
+            notifyObservers();
+        } else {
+            throw new IllegalArgumentException("Il libro '" + libro.getTitolo() + "' non è del tipo consentito per questa libreria: " + tipoLibreriaConsentito);
+        }
+    }
+
+    private boolean verificaTipoLibro(Libro libro) {
+        // If no specific type is set, accept all books
+        if (tipoLibreriaConsentito == null) {
+            return true;
+        }
+        // If book has no type set, reject it
+        if (libro.getTipoLibro() == null) {
+            return false;
+        }
+        // Check if book type matches library type
+        return libro.getTipoLibro().equals(tipoLibreriaConsentito);
     }
 
 
@@ -34,21 +71,25 @@ public class Libreria extends Observable {
 
     @Override
     public void addObserver(Observer o) {
-        o = new Observer() {
-            @Override
-            public void update(Observable o, Object arg) {
-
-            }
-        };
+        if (o != null && !observers.contains(o)) {
+            observers.add(o);
+        }
     }
 
     @Override
     public void notifyObservers() {
-
+        for (Observer observer : observers) {
+            observer.update(null, this);
+        }
     }
 
-    /*TODO: verificare che quando un libro viene aggiunto alla libreria sia del tipo giusto
-        also: controllare come funziona observer
-     */
+    // Getters
+    public Set<Libro> getLibri() {
+        return new HashSet<>(Libri); // Return copy for encapsulation
+    }
+
+    public TipoLibro getTipoLibreriaConsentito() {
+        return tipoLibreriaConsentito;
+    }
 
 }
