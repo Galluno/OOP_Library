@@ -1,4 +1,5 @@
 import java.time.LocalDate;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Observer;
 
@@ -6,7 +7,7 @@ public class Prestito implements Observable {
     public LocalDate data;
     public long inizioPrestito;
     private long finePrestito;
-    private Map<Libro, Utente> prestiti = new Map<Libro, Utente>(); //TODO: implementare la coppia Libro-Utente per il prestito
+    private Map<Libro, Utente> prestiti = new HashMap<>(); // Fixed: use HashMap implementation
         /*
         PRESTITO: rappresenta tutti i prestiti fatti da utenti della biblioteca.
         @param libro il libro in prestito
@@ -30,6 +31,19 @@ public class Prestito implements Observable {
     @Override
     public void notifyObservers() {
 
+    }
+
+    /**
+     * Add a new prestito (loan) between a user and a book
+     * @param utente the user taking the loan
+     * @param libro the book being loaned
+     */
+    public void addPrestito(Utente utente, Libro libro) {
+        prestiti.put(libro, utente);
+        utente.getLibriInPrestito().add(this);
+        this.data = LocalDate.now();
+        this.inizioPrestito = LocalDate.now().toEpochDay();
+        this.finePrestito = LocalDate.now().plusDays(30).toEpochDay();
     }
 
     /*

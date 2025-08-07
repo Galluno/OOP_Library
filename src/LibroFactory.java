@@ -9,7 +9,7 @@ public class LibroFactory {
      * @param tipo   il tipo di libro
      */
     public Libro createLibro(String titolo, String ISBN, String autore, TipoLibro tipo){
-        return new Libro(titolo, autore, ISBN, tipo);
+        return new Libro(titolo, ISBN, autore, tipo);
     }
 
     public Libreria createLibreria(){

@@ -29,7 +29,7 @@ public class Libreria extends Observable {
         return this.Libri.stream()
                 .filter(libro -> libro.getISBN().equals(ISBNtoSearch))
                 .toList()
-                .getFirst();
+                .get(0); // Fixed: use get(0) instead of getFirst() for compatibility
     }
 
     @Override

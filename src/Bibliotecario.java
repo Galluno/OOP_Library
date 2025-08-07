@@ -1,11 +1,8 @@
-import lombok.Getter;
-
 public class Bibliotecario {
 
-    @Getter
-    String codBibliotecario;
+    private String codBibliotecario;
     private final Prestito prestito;
-    private final @Getter LibroFactory librofactory = new LibroFactory();
+    private final LibroFactory librofactory = new LibroFactory();
 
     public Bibliotecario()
     {
@@ -24,9 +21,9 @@ public class Bibliotecario {
      */
     public void registraPrestiti(Utente utente, Libro libro) {
         if (!utente.isSospeso()) {
-            if (!checkDisponibilità(libro)) {
+            if (checkDisponibilità(libro)) {
                 libro.uscitaLibro(libro);
-                new Prestito().addPrestito(utente, libro);
+                prestito.addPrestito(utente, libro);
             } else throw new IllegalLibroAmount("Libro non disponibile");
         } else throw new IllegalUtenteException("L'utente è sospeso");
     }
@@ -55,6 +52,12 @@ public class Bibliotecario {
         return libro.getDisponibilità() > 0;
     }
 
+    // Getters
+    public String getCodBibliotecario() {
+        return codBibliotecario;
+    }
 
-
+    public LibroFactory getLibrofactory() {
+        return librofactory;
+    }
 }
