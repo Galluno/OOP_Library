@@ -55,6 +55,22 @@ public class Prestito implements Observable {
         if (LocalDate.now().toEpochDay() - finePrestito == 0) {
             utente.sospendiUtente();
         }
+    }
 
+    // Getters for accessing prestiti data
+    public Map<Libro, Utente> getPrestiti() {
+        return new HashMap<>(prestiti); // Return copy for encapsulation
+    }
+
+    public LocalDate getData() {
+        return data;
+    }
+
+    public long getFinePrestito() {
+        return finePrestito;
+    }
+
+    public boolean isScaduto() {
+        return LocalDate.now().toEpochDay() > finePrestito;
     }
 }
