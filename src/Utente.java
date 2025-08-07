@@ -1,20 +1,17 @@
-import lombok.Getter;
-import lombok.NonNull;
-
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
 public class Utente {
 
-    @Getter public String nome;
-    @Getter public String CodFis;
+    private String nome;
+    private String CodFis;
     private Date data;
     private boolean utenteSospeso;
 
     public Set<Prestito> libriInPrestito;
 
-    public Utente(String nome, @NonNull String CodFis) {
+    public Utente(String nome, String CodFis) {
         if(CodFis.isEmpty()) throw new IllegalArgumentException("Il codice fiscale non può essere vuoto"); else if(CodFis.length()<14) throw new IllegalArgumentException("Codice fiscale non valido");
 
         this.nome = nome;
@@ -32,5 +29,20 @@ public class Utente {
         return utenteSospeso;
     }
 
+    // Getters
+    public String getNome() {
+        return nome;
+    }
 
+    public String getCodFis() {
+        return CodFis;
+    }
+
+    public Date getData() {
+        return data;
+    }
+
+    public Set<Prestito> getLibriInPrestito() {
+        return libriInPrestito;
+    }
 }
